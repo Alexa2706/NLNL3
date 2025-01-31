@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine's Day Matchmaking</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="static/style.css">
 
 </head>
 <body>
@@ -42,7 +42,7 @@
 window.onload = function() {
     // Učitaj HTML formu na /form3_html (a ne /form3)
     // Učitaj podatke iz CSV fajla preko JSON rute
-    fetch('http://127.0.0.1:5501/get_form3_data')   // Ova ruta sada vraća JSON podatke
+    fetch('/get_form3_data')   // Ova ruta sada vraća JSON podatke
         .then(response => response.json())  // Pretvori JSON odgovor u objekat
         .then(data => {
             const userList = data.lista;  // 'lista' je ključ koji sadrži podatke
