@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine's Day Matchmaking</title>
     <link rel="stylesheet" href="static/style.css">
-
+    
 </head>
 <body>
-
+    
     <!-- CUPID'S CHOICE iznad header-a -->
     <div class="cupid-choice">CUPID'S CHOICE</div>
 
@@ -40,6 +40,17 @@
         </table>
        <script>
 window.onload = function() {
+    fetch('/form3')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Greška pri učitavanju stranice');
+            }
+            return response.text();  // Učitavanje HTML sadržaja
+        })
+        .then(html => {
+            document.getElementById('formContainer').innerHTML = html; // Ubaci HTML u div
+        })
+        .catch(error => console.error("Greška pri učitavanju forme:", error));
     // Učitaj HTML formu na /form3_html (a ne /form3)
     // Učitaj podatke iz CSV fajla preko JSON rute
     fetch('/get_form3_data')   // Ova ruta sada vraća JSON podatke
