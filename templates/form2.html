@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Matchmaking</title>
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body>
+
+    <!-- CUPID'S CHOICE iznad header-a -->
+    <div class="cupid-choice">CUPID'S CHOICE</div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">NLNL25</div>
+    </header>
+
+    <!-- Glavni sadržaj -->
+    <main class="main2">
+        <div class="content">
+            <div class="text">
+              
+                
+            </div>
+           
+        </div>
+        <h5>Vaš broj je: <span id="userNumber"></span></h5>
+        <div class="image1">
+            <img src="../static/imgages/cupid.jpg" alt="Cupid's Party">
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>NAPRAVLJENO S LJUBAVLJU ZA NLNL25 &copy;</p>
+    </footer>
+
+    <script>
+        // Pokušaj preuzimanja broja korisnika iz localStorage-a
+        const userNumber = localStorage.getItem('userNumber');
+        
+        if (userNumber) {
+            // Ako postoji broj, prikazujemo ga na stranici
+            document.getElementById('userNumber').textContent = userNumber;
+        } else {
+            // Ako broj ne postoji u localStorage, postavljamo podrazumevanu vrednost
+            document.getElementById('userNumber').textContent = "N/A";
+        }
+    </script>
+
+</body>
+</html>
