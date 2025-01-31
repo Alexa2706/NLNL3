@@ -72,5 +72,5 @@ def get_form3_data():
     gas = list(collection.find())
     return jsonify({"lista": json.loads(json_util.dumps(gas))})
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5501, debug=True)
+if name == 'main':
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)), debug=True)
