@@ -154,28 +154,57 @@
             zauzet: zauzet,
             par: par
         };
-    
-        // Pošaljite podatke serveru (putem fetch-a)
-        fetch("https://nlnl3.onrender.com/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Spremi broj korisnika u localStorage
-            localStorage.setItem("userNumber", data.broj); // Čuva broj korisnika u localStorage
-            window.location.href = "/form2"; // Preusmeravanje na form2.html
-        })
-        .catch(error => {
-            console.error("Greška:", error);
+
+        // Prikazivanje alert-a za čekanje
+        Swal.fire({
+            title: 'Molim vas ne zatvrajte stranicu, obrada je u toku',
+            text: 'Ako je baza opterećena, slanje može potrajati do 1 minut. Molim Vas sačekajte potvrdu o slanju.',
+            icon: 'info',
+            allowOutsideClick: false,  // Sprečava zatvaranje
+            showConfirmButton: false,  // Ne prikazuje dugme za potvrdu
+            didOpen: () => {
+                Swal.showLoading();  // Prikazuje loading animaciju
+            }
         });
+
+        // Funkcija za slanje podataka
+        function sendData() {
+            fetch("https://nlnl3.onrender.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Connection": "keep-alive"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                console.log("Response status:", response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received:", data);
+                // Kada se podaci uspešno pošalju, preusmeri korisnika na form2
+                Swal.fire({
+                    title: '✅ Uspeh!',
+                    text: 'Podaci su uspešno poslati!',
+                    icon: 'success',
+                    confirmButtonText: 'U redu'
+                }).then(() => {
+                    localStorage.setItem("userNumber", data.broj);
+                    window.location.href = "/form2";  // Preusmeravanje na form2
+                });
+            })
+            .catch(error => {
+                console.error("Greška:", error);
+                // Retry logic: Ponovo pokušaj
+                setTimeout(sendData, 2000);  // Pokušaj ponovo nakon 2 sekunde
+            });
+        }
+
+        // Prvi pokušaj slanja podataka
+        sendData();
     });
 </script>
-
-
 
 </body>
 </html>
