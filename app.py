@@ -6,11 +6,7 @@ import pandas as pd
 import json
 from bson import json_util 
 import os
-import schedule
 import time
-import threading
-import random
-import string
 app = Flask(__name__)
 CORS(app)  # Omogućava CORS
 #"mongodb+srv://user1:awd123faw13@cluster0.m9u9j.mongodb.net/test?retryWrites=true&w=majority"
@@ -22,17 +18,6 @@ collection = db['test-subjects']  # Ime kolekcije
 #result = collection.delete_many({}) 
 # Putanja do CSV fajla (proveri da li je fajl na pravoj lokaciji)
 # Ruta za serviranje HTML forme
-def keep_alive():
-    while True:
-        try:
-            client.admin.command('ping')
-            print("✅ Konekcija stabilna!")
-        except Exception as e:
-            print("⛔ Ping error:", e)
-        time.sleep(300)  # Ping na svakih 5 minuta
-
-# Pokreni keep-alive u pozadini
-threading.Thread(target=keep_alive, daemon=True).start()
 @app.route('/')
 def index():
     return render_template('index.html')
