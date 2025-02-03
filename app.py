@@ -13,7 +13,6 @@ CORS(app)  # Omogućava CORS
 client = MongoClient("mongodb://localhost:27017")
 db = client['NLNL']
 collection = db['test-subjects']  # Ime kolekcije
-
 # Unos podataka u kolekciju
 #result = collection.delete_many({}) 
 # Putanja do CSV fajla (proveri da li je fajl na pravoj lokaciji)
