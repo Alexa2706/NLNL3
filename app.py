@@ -6,11 +6,7 @@ import pandas as pd
 import json
 from bson import json_util 
 import os
-import schedule
-import time
-import threading
-import random
-import string
+
 app = Flask(__name__)
 CORS(app)  # Omogućava CORS
 client = MongoClient('mongodb://localhost:27017/')
@@ -85,5 +81,4 @@ def get_form3_data():
     return jsonify({"lista": json.loads(json_util.dumps(gas))})
 
 if __name__ == '__main__':
-    
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)), debug=True)
