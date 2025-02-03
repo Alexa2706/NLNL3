@@ -6,18 +6,31 @@ import pandas as pd
 import json
 from bson import json_util 
 import os
+import schedule
+import time
+import threading
+import random
+import string
 app = Flask(__name__)
 CORS(app)  # Omogućava CORS
-client = MongoClient(
-    "mongodb+srv://user1:awd123faw13@cluster0.m9u9j.mongodb.net/test?retryWrites=true&w=majority",
-    tlsAllowInvalidCertificates=True  # Onemogućava proveru SSL sertifikata
-)
-db = client['test']
-collection = db['users']  # Ime kolekcije
+client = MongoClient('mongodb://localhost:27017/')
+db = client['NLNL']
+collection = db['test-subjects']  # Ime kolekcije
 #result = collection.delete_many({}) 
 # Putanja do CSV fajla (proveri da li je fajl na pravoj lokaciji)
 
 # Ruta za serviranje HTML forme
+# def keep_alive():
+#     while True:
+#         try:
+#             client.admin.command('ping')
+#             print("✅ Konekcija stabilna!")
+#         except Exception as e:
+#             print("⛔ Ping error:", e)
+#         time.sleep(300)  # Ping na svakih 5 minuta
+
+# # Pokreni keep-alive u pozadini
+# threading.Thread(target=keep_alive, daemon=True).start()
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -25,7 +38,6 @@ def index():
 @app.route('/form')
 def form():
     return render_template('form.html')
-
 
 @app.route('/form2')
 def form2():
@@ -69,8 +81,9 @@ def form3():
 
 @app.route('/get_form3_data')
 def get_form3_data():
-    gas = list(collection.find())
+    gas = list(colalection.find())
     return jsonify({"lista": json.loads(json_util.dumps(gas))})
 
 if __name__ == '__main__':
+    
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)), debug=True)
